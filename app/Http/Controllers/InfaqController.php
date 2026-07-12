@@ -27,10 +27,12 @@ class InfaqController extends Controller
     {
         $request->validate([
             'nama_donatur' => 'required|string|max:100',
-            'jumlah'       => 'required|numeric|min:1000',
+            'jumlah'       => 'required|numeric|min:1',
             'tanggal'      => 'required|date',
             'no_wa'        => 'required|string|max:20',
             'keterangan'   => 'nullable|string|max:255',
+        ], [
+            'jumlah.min' => 'Nominal uang tidak boleh 0, minimal adalah Rp. 1.'
         ]);
 
         // Simpan data dengan status pending
@@ -43,14 +45,6 @@ class InfaqController extends Controller
             'status'       => 'pending',
         ]);
 
-        // Pesan WA otomatis
-        $pesan = "Assalamu'alaikum, saya *{$request->nama_donatur}* ingin konfirmasi infaq sebesar *Rp. " . number_format($request->jumlah, 0, ',', '.') . "* pada tanggal *{$request->tanggal}*." .
-                 ($request->keterangan ? " Keterangan: {$request->keterangan}." : '') .
-                 " Terima kasih, Jazakallah Khairan.";
-
-        $noWaAdmin = '6281119722502'; // Bp. Eko Pramono
-        $waUrl = 'https://api.whatsapp.com/send/?phone=' . $noWaAdmin . '&text=' . urlencode($pesan) . '&app_absent=0';
-
-        return redirect($waUrl);
+        return back()->with('success', 'Alhamdulillah, konfirmasi infaq berhasil dikirim dan sedang menunggu verifikasi admin. Jazakumullah khairan.');
     }
 }

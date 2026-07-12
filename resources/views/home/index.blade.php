@@ -126,6 +126,58 @@
         </div>
     </div>
 
+    {{-- INVENTARIS BARANG --}}
+    <div class="customInformasi mb-4" id="inventaris">
+        <h2>INVENTARIS MASJID</h2>
+        <div class="row">
+            <div class="col-12" data-aos="fade-up">
+                <div class="card shadow-sm">
+                    <div class="card-header fw-bold" style="background:#f8f9fa; color:#2d5895;">
+                        <i class="bi bi-box-seam me-2"></i> Daftar Inventaris Barang
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered mb-0">
+                                <thead style="background-color: #f2f2f2;">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Barang</th>
+                                        <th>Jumlah</th>
+                                        <th>Kondisi</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($inventaris as $index => $item)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td class="fw-bold">{{ $item->nama_barang }}</td>
+                                        <td>{{ $item->jumlah }} {{ $item->satuan }}</td>
+                                        <td>
+                                            @if($item->kondisi === 'baik')
+                                                <span class="badge bg-success">Baik</span>
+                                            @elseif($item->kondisi === 'rusak ringan')
+                                                <span class="badge bg-warning text-dark">Rusak Ringan</span>
+                                            @else
+                                                <span class="badge bg-danger">Rusak Berat</span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->keterangan ?? '-' }}</td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-3">Belum ada data inventaris.</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- GALERI --}}
     <div class="customGaleri mb-4" id="galeri">
         <h2 class="text-center">GALERI</h2>

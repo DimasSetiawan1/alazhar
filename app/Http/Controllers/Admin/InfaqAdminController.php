@@ -19,10 +19,12 @@ class InfaqAdminController extends Controller
     {
         $request->validate([
             'nama_donatur' => 'required|string|max:100',
-            'jumlah'       => 'required|numeric|min:0',
+            'jumlah'       => 'required|numeric|min:1',
             'tanggal'      => 'required|date',
             'keterangan'   => 'nullable|string|max:255',
             'status'       => 'required|in:pending,confirmed',
+        ], [
+            'jumlah.min' => 'Nominal uang tidak boleh 0, minimal adalah Rp. 1.'
         ]);
 
         Infaq::create($request->all());

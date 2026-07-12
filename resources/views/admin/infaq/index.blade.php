@@ -97,7 +97,7 @@
                     <div class="mb-3">
                         <label class="form-label" style="font-size:13px; font-weight:600; color:#2d5895;">Jumlah (Rp)</label>
                         <input type="number" name="jumlah" class="form-control form-control-sm @error('jumlah') is-invalid @enderror"
-                               value="{{ old('jumlah') }}" min="0" required>
+                               value="{{ old('jumlah') }}" min="1" required>
                         @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
@@ -123,3 +123,14 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.querySelector('input[name="jumlah"]').addEventListener('input', function(e) {
+        if (this.value !== '' && parseFloat(this.value) <= 0) {
+            alert('Peringatan: Nominal uang tidak boleh 0, minimal adalah Rp. 1.');
+            this.value = '';
+        }
+    });
+</script>
+@endpush

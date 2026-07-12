@@ -33,11 +33,16 @@
                 {{-- Form Konfirmasi Bayar --}}
                 <div class="card shadow-sm" data-aos="fade-up">
                     <div class="card-header fw-bold" style="background:#f8f9fa; color:#2d5895;">
-                        <i class="bi bi-whatsapp text-success me-2"></i> Konfirmasi Pembayaran via WhatsApp
+                        <i class="bi bi-file-earmark-text text-primary me-2"></i> Konfirmasi Pembayaran
                     </div>
                     <div class="card-body">
+                        @if(session('success'))
+                            <div class="alert alert-success fw-bold">
+                                <i class="bi bi-check-circle me-1"></i> {{ session('success') }}
+                            </div>
+                        @endif
                         <p class="text-muted" style="font-size:13px;">
-                            Isi form berikut untuk konfirmasi infaq Anda. Setelah submit, Anda akan diarahkan ke WhatsApp koordinator.
+                            Isi form berikut untuk konfirmasi infaq Anda. Data akan diverifikasi oleh admin.
                         </p>
                         <form action="{{ route('infaq.konfirmasi') }}" method="POST">
                             @csrf
@@ -50,7 +55,7 @@
                             <div class="mb-3">
                                 <label class="form-label fw-bold" style="font-size:14px;">Jumlah Infaq (Rp)</label>
                                 <input type="number" name="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
-                                       placeholder="Contoh: 500000" value="{{ old('jumlah') }}" min="1000" required>
+                                       placeholder="Contoh: 500000" value="{{ old('jumlah') }}" min="1" required>
                                 @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="mb-3">
@@ -70,7 +75,7 @@
                                 <textarea name="keterangan" class="form-control" rows="2" placeholder="Contoh: Infaq Jumat minggu ini">{{ old('keterangan') }}</textarea>
                             </div>
                             <button type="submit" class="btn w-100 fw-bold" style="background:linear-gradient(to right,#3a7bd5,#00d2ff); color:#fff; border:none;">
-                                <i class="bi bi-whatsapp me-2"></i> Kirim Konfirmasi via WhatsApp
+                                <i class="bi bi-send me-2"></i> Kirim Konfirmasi
                             </button>
                         </form>
                     </div>
@@ -136,3 +141,14 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    document.querySelector('input[name="jumlah"]').addEventListener('input', function(e) {
+        if (this.value !== '' && parseFloat(this.value) <= 0) {
+            alert('Peringatan: Nominal uang tidak boleh 0, minimal adalah Rp. 1.');
+            this.value = '';
+        }
+    });
+</script>
+@endpush

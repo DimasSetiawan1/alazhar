@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use App\Models\Infaq;
 use App\Models\Galeri;
-use Illuminate\Http\Request;
+use App\Models\Inventaris;
 
 class HomeController extends Controller
 {
@@ -15,7 +15,8 @@ class HomeController extends Controller
         $infaqs   = Infaq::where('status', 'confirmed')->latest('tanggal')->take(5)->get();
         $totalInfaq = Infaq::where('status', 'confirmed')->sum('jumlah');
         $galeris  = Galeri::latest()->take(6)->get();
+        $inventaris = Inventaris::all();
 
-        return view('home.index', compact('artikels', 'infaqs', 'totalInfaq', 'galeris'));
+        return view('home.index', compact('artikels', 'infaqs', 'totalInfaq', 'galeris', 'inventaris'));
     }
 }
