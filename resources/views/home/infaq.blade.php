@@ -44,7 +44,7 @@
                         <p class="text-muted" style="font-size:13px;">
                             Isi form berikut untuk konfirmasi infaq Anda. Data akan diverifikasi oleh admin.
                         </p>
-                        <form action="{{ route('infaq.konfirmasi') }}" method="POST">
+                        <form action="{{ route('infaq.konfirmasi') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label fw-bold" style="font-size:14px;">Nama Donatur</label>
@@ -55,7 +55,7 @@
                             <div class="mb-3">
                                 <label class="form-label fw-bold" style="font-size:14px;">Jumlah Infaq (Rp)</label>
                                 <input type="number" name="jumlah" class="form-control @error('jumlah') is-invalid @enderror"
-                                       placeholder="Contoh: 500000" value="{{ old('jumlah') }}" min="1" required>
+                                       placeholder="Contoh: 500000" value="{{ old('jumlah') }}" min="1000" required>
                                 @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="mb-3">
@@ -67,12 +67,18 @@
                             <div class="mb-3">
                                 <label class="form-label fw-bold" style="font-size:14px;">Nomor WhatsApp</label>
                                 <input type="text" name="no_wa" class="form-control @error('no_wa') is-invalid @enderror"
-                                       placeholder="628xxxxxxxxx" value="{{ old('no_wa') }}" required>
+                                       placeholder="Contoh: 081234567890" value="{{ old('no_wa') }}" minlength="10" maxlength="15" pattern="[0-9\-\+\(\)]+" required>
                                 @error('no_wa')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold" style="font-size:14px;">Keterangan (opsional)</label>
                                 <textarea name="keterangan" class="form-control" rows="2" placeholder="Contoh: Infaq Jumat minggu ini">{{ old('keterangan') }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold" style="font-size:14px;">Bukti Transfer</label>
+                                <input type="file" name="bukti_transfer" class="form-control @error('bukti_transfer') is-invalid @enderror" accept="image/*" required>
+                                <div class="form-text" style="font-size: 12px;">Format: JPG, PNG, maksimal 2MB</div>
+                                @error('bukti_transfer')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <button type="submit" class="btn w-100 fw-bold" style="background:linear-gradient(to right,#3a7bd5,#00d2ff); color:#fff; border:none;">
                                 <i class="bi bi-send me-2"></i> Kirim Konfirmasi
@@ -145,8 +151,8 @@
 @push('scripts')
 <script>
     document.querySelector('input[name="jumlah"]').addEventListener('input', function(e) {
-        if (this.value !== '' && parseFloat(this.value) <= 0) {
-            alert('Peringatan: Nominal uang tidak boleh 0, minimal adalah Rp. 1.');
+        if (this.value !== '' && parseFloat(this.value) < 1000) {
+            alert('Peringatan: Nominal uang tidak boleh kurang dari Rp. 1.000.');
             this.value = '';
         }
     });

@@ -27,6 +27,7 @@
                                 <th>Jumlah</th>
                                 <th>Tanggal</th>
                                 <th>No. WA</th>
+                                <th>Bukti</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -42,6 +43,15 @@
                                     @if($infaq->no_wa)
                                         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $infaq->no_wa) }}" target="_blank" class="text-success">
                                             <i class="bi bi-whatsapp me-1"></i>{{ $infaq->no_wa }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($infaq->bukti_transfer)
+                                        <a href="{{ asset('storage/' . $infaq->bukti_transfer) }}" target="_blank" class="btn btn-sm btn-outline-primary" title="Lihat Bukti">
+                                            <i class="bi bi-image"></i> Lihat
                                         </a>
                                     @else
                                         <span class="text-muted">—</span>
@@ -73,7 +83,7 @@
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="7" class="text-center text-muted py-4">Belum ada data infaq.</td></tr>
+                            <tr><td colspan="8" class="text-center text-muted py-4">Belum ada data infaq.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -86,7 +96,7 @@
         <div class="col-lg-4">
             <div class="content-card">
                 <h5><i class="bi bi-plus-circle me-2"></i>Tambah Data Infaq</h5>
-                <form action="{{ route('admin.infaq.store') }}" method="POST">
+                <form action="{{ route('admin.infaq.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label" style="font-size:13px; font-weight:600; color:#2d5895;">Nama Donatur</label>
@@ -97,7 +107,7 @@
                     <div class="mb-3">
                         <label class="form-label" style="font-size:13px; font-weight:600; color:#2d5895;">Jumlah (Rp)</label>
                         <input type="number" name="jumlah" class="form-control form-control-sm @error('jumlah') is-invalid @enderror"
-                               value="{{ old('jumlah') }}" min="1" required>
+                               value="{{ old('jumlah') }}" min="1000" required>
                         @error('jumlah')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
@@ -109,6 +119,11 @@
                     <div class="mb-3">
                         <label class="form-label" style="font-size:13px; font-weight:600; color:#2d5895;">Keterangan</label>
                         <input type="text" name="keterangan" class="form-control form-control-sm" value="{{ old('keterangan') }}" placeholder="opsional">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size:13px; font-weight:600; color:#2d5895;">Bukti Transfer</label>
+                        <input type="file" name="bukti_transfer" class="form-control form-control-sm @error('bukti_transfer') is-invalid @enderror" accept="image/*">
+                        @error('bukti_transfer')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label" style="font-size:13px; font-weight:600; color:#2d5895;">Status</label>
@@ -127,8 +142,8 @@
 @push('scripts')
 <script>
     document.querySelector('input[name="jumlah"]').addEventListener('input', function(e) {
-        if (this.value !== '' && parseFloat(this.value) <= 0) {
-            alert('Peringatan: Nominal uang tidak boleh 0, minimal adalah Rp. 1.');
+        if (this.value !== '' && parseFloat(this.value) < 1000) {
+            alert('Peringatan: Nominal uang tidak boleh kurang dari Rp. 1.000.');
             this.value = '';
         }
     });
