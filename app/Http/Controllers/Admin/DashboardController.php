@@ -7,6 +7,7 @@ use App\Models\Artikel;
 use App\Models\Infaq;
 use App\Models\Inventaris;
 use App\Models\Galeri;
+use App\Models\Pengeluaran;
 
 class DashboardController extends Controller
 {
@@ -14,6 +15,8 @@ class DashboardController extends Controller
     {
         $totalArtikel    = Artikel::count();
         $totalInfaq      = Infaq::where('status', 'confirmed')->sum('jumlah');
+        $totalPengeluaran = Pengeluaran::sum('jumlah');
+        $saldo           = $totalInfaq - $totalPengeluaran;
         $pendingInfaq    = Infaq::where('status', 'pending')->count();
         $totalInventaris = Inventaris::count();
         $totalGaleri     = Galeri::count();
@@ -21,7 +24,7 @@ class DashboardController extends Controller
         $infaqTerbaru = Infaq::latest()->take(5)->get();
 
         return view('admin.dashboard', compact(
-            'totalArtikel', 'totalInfaq', 'pendingInfaq',
+            'totalArtikel', 'totalInfaq', 'totalPengeluaran', 'saldo', 'pendingInfaq',
             'totalInventaris', 'totalGaleri', 'infaqTerbaru'
         ));
     }

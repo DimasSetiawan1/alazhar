@@ -134,6 +134,9 @@
                             <a class="nav-link fontNavbar {{ request()->routeIs('jadwal-sholat') ? 'active fw-bold' : '' }}" href="{{ route('jadwal-sholat') }}">Jadwal Sholat</a>
                         </li>
                         <li class="nav-item me-5">
+                            <a class="nav-link fontNavbar {{ request()->routeIs('pengeluaran.index') ? 'active fw-bold' : '' }}" href="{{ route('pengeluaran.index') }}">Pengeluaran</a>
+                        </li>
+                        <li class="nav-item me-5">
                             <a class="nav-link fontNavbar" href="{{ route('home') }}#galeri">Galeri</a>
                         </li>
                     </ul>

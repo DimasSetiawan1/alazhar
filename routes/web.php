@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\ArtikelAdminController;
 use App\Http\Controllers\Admin\InfaqAdminController;
 use App\Http\Controllers\Admin\InventarisController;
 use App\Http\Controllers\Admin\GaleriController;
+use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\Admin\PengeluaranAdminController;
 
 // ─── PUBLIC ROUTES ──────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -19,6 +21,7 @@ Route::get('/infaq', [InfaqController::class, 'index'])->name('infaq.index');
 Route::get('/infaq/export-pdf', [InfaqController::class, 'exportPdf'])->name('infaq.export-pdf');
 Route::post('/infaq/konfirmasi', [InfaqController::class, 'konfirmasi'])->name('infaq.konfirmasi');
 Route::get('/jadwal-sholat', [JadwalSholatController::class, 'index'])->name('jadwal-sholat');
+Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('pengeluaran.index');
 
 // ─── AUTH ROUTES ─────────────────────────────────────────
 Route::get('/admin/login', [LoginController::class, 'showForm'])->name('login');
@@ -42,6 +45,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('infaq', [InfaqAdminController::class, 'store'])->name('infaq.store');
     Route::patch('infaq/{infaq}/confirm', [InfaqAdminController::class, 'confirm'])->name('infaq.confirm');
     Route::delete('infaq/{infaq}', [InfaqAdminController::class, 'destroy'])->name('infaq.destroy');
+
+    // Pengeluaran
+    Route::resource('pengeluaran', PengeluaranAdminController::class)->only(['index', 'store', 'destroy']);
 
     // Inventaris
     Route::get('inventaris', [InventarisController::class, 'index'])->name('inventaris.index');

@@ -217,6 +217,9 @@
             <a href="{{ route('admin.infaq.index') }}" class="nav-link {{ request()->routeIs('admin.infaq.*') ? 'active' : '' }}">
                 <i class="bi bi-cash-stack"></i> Kelola Infaq
             </a>
+            <a href="{{ route('admin.pengeluaran.index') }}" class="nav-link {{ request()->routeIs('admin.pengeluaran.*') ? 'active' : '' }}">
+                <i class="bi bi-wallet2"></i> Kelola Pengeluaran
+            </a>
             <a href="{{ route('admin.inventaris.index') }}" class="nav-link {{ request()->routeIs('admin.inventaris.*') ? 'active' : '' }}">
                 <i class="bi bi-box-seam"></i> Inventaris Barang
             </a>

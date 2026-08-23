@@ -150,7 +150,7 @@
 
 @push('scripts')
 <script>
-    document.querySelector('input[name="jumlah"]').addEventListener('input', function(e) {
+    document.querySelector('input[name="jumlah"]').addEventListener('change', function(e) {
         if (this.value !== '' && parseFloat(this.value) < 1000) {
             alert('Peringatan: Nominal uang tidak boleh kurang dari Rp. 1.000.');
             this.value = '';

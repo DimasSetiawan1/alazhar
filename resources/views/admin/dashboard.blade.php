@@ -8,23 +8,34 @@
     {{-- Stat Cards --}}
     <div class="row g-3 mb-4">
         <div class="col-sm-6 col-lg-3">
-            <div class="stat-card">
+            <div class="stat-card" style="border-left-color:#00b09b;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="stat-icon"><i class="bi bi-newspaper"></i></div>
+                    <div class="stat-icon" style="background:linear-gradient(to right,#00b09b,#96c93d);"><i class="bi bi-box-arrow-in-down"></i></div>
                     <div>
-                        <div class="stat-number">{{ $totalArtikel }}</div>
-                        <div class="stat-label">Total Artikel</div>
+                        <div class="stat-number" style="font-size:18px;">Rp. {{ number_format($totalInfaq, 0, ',', '.') }}</div>
+                        <div class="stat-label">Total Pemasukan (Infaq)</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-            <div class="stat-card" style="border-left-color:#00b09b;">
+            <div class="stat-card" style="border-left-color:#e74c3c;">
                 <div class="d-flex align-items-center gap-3">
-                    <div class="stat-icon" style="background:linear-gradient(to right,#00b09b,#96c93d);"><i class="bi bi-cash-stack"></i></div>
+                    <div class="stat-icon" style="background:linear-gradient(to right,#e74c3c,#c0392b);"><i class="bi bi-box-arrow-up"></i></div>
                     <div>
-                        <div class="stat-number" style="font-size:18px;">Rp. {{ number_format($totalInfaq, 0, ',', '.') }}</div>
-                        <div class="stat-label">Total Infaq Terkumpul</div>
+                        <div class="stat-number" style="font-size:18px;">Rp. {{ number_format($totalPengeluaran, 0, ',', '.') }}</div>
+                        <div class="stat-label">Total Pengeluaran</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card" style="border-left-color:#3a7bd5;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="stat-icon" style="background:linear-gradient(to right,#3a7bd5,#00d2ff);"><i class="bi bi-wallet2"></i></div>
+                    <div>
+                        <div class="stat-number" style="font-size:18px;">Rp. {{ number_format($saldo, 0, ',', '.') }}</div>
+                        <div class="stat-label">Saldo Saat Ini</div>
                     </div>
                 </div>
             </div>
@@ -35,18 +46,7 @@
                     <div class="stat-icon" style="background:linear-gradient(to right,#f5a623,#f9d423);"><i class="bi bi-clock-history"></i></div>
                     <div>
                         <div class="stat-number">{{ $pendingInfaq }}</div>
-                        <div class="stat-label">Infaq Menunggu Konfirmasi</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="stat-card" style="border-left-color:#e74c3c;">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="stat-icon" style="background:linear-gradient(to right,#e74c3c,#c0392b);"><i class="bi bi-box-seam"></i></div>
-                    <div>
-                        <div class="stat-number">{{ $totalInventaris }}</div>
-                        <div class="stat-label">Total Item Inventaris</div>
+                        <div class="stat-label">Infaq Pending</div>
                     </div>
                 </div>
             </div>
